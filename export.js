@@ -430,12 +430,7 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
             raid.startTime = (+moment(raid.date, 'YY-MM-DD HH:mm:ss')) / 1000;
 
          console.log(`Uploading raid ${raidName(raid)} to ${apiEndpoint + "/raid"}...`)
-         console.log({
-            logs,
-            raid,
-            classes: first ? payload.classes : null,
-            roster: first ? payload.roster : null,
-         })
+
          const response = await fetch(apiEndpoint + "/raid", {
             method: 'POST',
             body: JSON.stringify({
