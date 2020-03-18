@@ -19,6 +19,7 @@ const
    colors = require('ansi-256-colors'),
    program = require('commander'),
    request = require('async-request'),
+   fetch = require('isomorphic-fetch'),
    Promise = require('bluebird'),
    lineReader = require('line-reader'),
    colorInfo = colors.fg.getRgb(0, 1, 4),
@@ -429,17 +430,29 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
             raid.startTime = (+moment(raid.date, 'YY-MM-DD HH:mm:ss')) / 1000;
 
          console.log(`Uploading raid ${raidName(raid)} to ${apiEndpoint + "/raid"}...`)
-         const response = await request(apiEndpoint + "/raid", {
+         console.log({
+            logs,
+            raid,
+            classes: first ? payload.classes : null,
+            roster: first ? payload.roster : null,
+         })
+         const response = await fetch(apiEndpoint + "/raid", {
             method: 'POST',
-            data: {
+            body: JSON.stringify({
                logs,
                raid,
                classes: first ? payload.classes : null,
                roster: first ? payload.roster : null,
-            },
+            }),
+            headers: {
+               'Content-Type': 'application/json'
+           }
          });
          first = false;
-         handleServerResponse(response);
+
+         if(response.status == 200) {
+            console.log('Upload done.')
+         }
       }
 
       if (gear && raids.length)
@@ -450,7 +463,7 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
 }
 
 async function uploadGear(apiEndpoint, backupPath, retainlog, classes, raidInfo, combatlogsPath) {
-   try {
+   /* try {
       const logFile = combatlogsPath || findLogFile(true);
 
       if (!logFile)
@@ -488,7 +501,7 @@ async function uploadGear(apiEndpoint, backupPath, retainlog, classes, raidInfo,
 
    } catch (e) {
       console.error(`Failed uploading combat logs: ${e.stack}`);
-   }
+   }*/ 
 }
 
 function clCreateIter(line) {
