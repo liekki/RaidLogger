@@ -9,6 +9,11 @@ local BUFFS = {
         desc = "Songflower",
         type = "World",
     },
+    ["16609"] = {
+        name = "Warchief's Blessing",
+        desc = "WCB",
+        type = "World",
+    },
     ["22817"] = {
         name = "Fengus' Ferocity",
         desc = "DMT AP",
@@ -229,8 +234,8 @@ function RaidLogger_CheckBuffs(players)
     for i = 1, 40 do
         name, _, group = GetRaidRosterInfo(i)
         if name then
-            if not players[name] then players[name] = {} end 
-            RaidLogger_CheckUnitBuffs(players[name], "raid" .. i) 
+            if not players[name] then players[name] = {} end
+            RaidLogger_CheckUnitBuffs(players[name], "raid" .. i)
             players[name]["present"] = (players[name]["present"] or 0) + 1
         end
     end
@@ -240,14 +245,14 @@ end
 function RaidLogger_CheckUnitBuffs(player, unit)
     for i = 1, 40 do
         local buffName, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
-        if spellId then 
+        if spellId then
             -- using string because our lua parser having hard time dealing with number keys
             spellId = tostring(spellId)
             local trackedBuff = BUFFS[spellId]
             -- print(" |cff0088ff<|cff00bbffRaidLogger|cff0088ff>|r player "..i.." has "..buffName.." "..tostring(trackedBuff))
-            if trackedBuff then 
-                player[spellId] = (player[spellId] or 0) + 1 
-            end 
-        end 
+            if trackedBuff then
+                player[spellId] = (player[spellId] or 0) + 1
+            end
+        end
     end
 end

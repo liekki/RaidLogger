@@ -15,6 +15,14 @@ module.exports = {
       "onetime": true,
       "imageUrl": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_mindvision.jpg",
    },
+   "16609": {
+      "name": "Warchief's Blessing",
+      "desc": "WCB",
+      "type": "World",
+      "score": 600,
+      "onetime": true,
+      "imageUrl": "https://wow.zamimg.com/images/wow/icons/large/spell_arcane_teleportorgrimmar.jpg",
+   },
    "22817": {
       "name": "Fengus' Ferocity",
       "desc": "DMT AP",
