@@ -401,7 +401,7 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
       let first = true;
       let raids;
 
-      if (choose) {
+      if (choose || true) {
          let raidOptions = payload.raids.map(o => raidName(o));
          raidOptions.push('Cancel');
 
@@ -424,13 +424,31 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
 
       backup(backupPath, luaFile, "raids", "lua");
 
+      let raidGroupOpts = [
+         {
+            name: 'Main raid',
+            slug: 'main-raid'
+         },
+         {
+            name: 'Secondary raid',
+            slug: 'secondary-raid'
+         }
+      ];
+
+      let raidGroupAnswers = await inquirer.promptAsync([{
+         type: 'list',
+         name: 'action',
+         message: 'Choose raid group:',
+         choices: raidGroupOpts.map(o => o.name)
+      }]);
+
+      const raidGroupAnswer = raidGroupOpts.filter(o => o.name == raidGroupAnswers['action'])[0].slug
+
       for (let raid of raids) {
          // fix local time
          if (!raid.startTime)
-            raid.startTime = (+moment(raid.date, 'YY-MM-DD HH:mm:ss')) / 1000;
-
+            raid.startTime = (+moment(raid.date, 'YY-MM-DD HH:mm:ss')) / 1000;            
          console.log(`Uploading raid ${raidName(raid)} to ${apiEndpoint + "/raid"}...`)
-
          const response = await fetch(apiEndpoint + "/raid", {
             method: 'POST',
             body: JSON.stringify({
@@ -438,6 +456,7 @@ async function uploadRaids(apiEndpoint, backupPath, logs, gear, retainlog, choos
                raid,
                classes: first ? payload.classes : null,
                roster: first ? payload.roster : null,
+               group: raidGroupAnswer
             }),
             headers: {
                'Content-Type': 'application/json'
