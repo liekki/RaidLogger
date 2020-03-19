@@ -48,6 +48,7 @@ local STATE_ATTENDED = "a"
 local STATE_BENCHED = "b"
 local STATE_NOSHOW = "n"
 local STATE_LATE = "l"
+local STATE_SKIP = "s"
 
 local QUALITY_POOR = 0 -- gray
 local QUALITY_COMMON = 1 -- white
@@ -200,6 +201,7 @@ local function AttStatusToString(status)
     if status == STATE_ATTENDED then return "Attended" end 
     if status == STATE_BENCHED then return "Benched" end
     if status == STATE_LATE then return "Late" end 
+    if status == STATE_SKIP then return "Skip from logs" end 
     if status == STATE_NOSHOW then return "No Show" end 
     return "??"..status
 end 
@@ -208,6 +210,7 @@ local function AttStatusFromString(text)
     if text == "Attended" then return STATE_ATTENDED end
     if text == "Benched" then return STATE_BENCHED end
     if text == "Late" then return STATE_LATE end
+    if text == "Skip from logs" then return STATE_SKIP end
     if text == "No Show" then return STATE_NOSHOW end
     return "??"
 end 
@@ -518,6 +521,7 @@ function RaidLogger_Commands(msg)
             out("Benched " .. ConcatPlayers(RaidLoggerStore.activeRaid.players, STATE_BENCHED))
             out("No-show " .. ConcatPlayers(RaidLoggerStore.activeRaid.players, STATE_NOSHOW))
             out("Late " .. ConcatPlayers(RaidLoggerStore.activeRaid.players, STATE_LATE))
+            out("Skip " .. ConcatPlayers(RaidLoggerStore.activeRaid.players, STATE_SKIP))
         else
             out("No active raid.")
         end
@@ -1582,6 +1586,10 @@ function RaidLogger_RaidWindow_PlayersTab:AddRow(player, status)
             info.text, info.checked = "Attended", STATE_ATTENDED == status
             UIDropDownMenu_AddButton(info)
             info.text, info.checked = "Benched", STATE_BENCHED == status
+            UIDropDownMenu_AddButton(info)
+            info.text, info.checked = "Late", STATE_LATE == status
+            UIDropDownMenu_AddButton(info)
+            info.text, info.checked = "Skip from logs", STATE_SKIP == status
             UIDropDownMenu_AddButton(info)
         end)
     end 
