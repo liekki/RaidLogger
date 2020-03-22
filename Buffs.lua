@@ -29,7 +29,7 @@ local BUFFS = {
         desc = "DMF",
         type = "world"
     },
-    ["24425"] => {
+    ["24425"] = {
         name = "Spirit of Zandalar",
         desc = "ZG",
         type = "world"
