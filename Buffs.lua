@@ -14,6 +14,26 @@ local BUFFS = {
         desc = "WCB",
         type = "World",
     },
+    ["23766"] = {
+        name = "Sayge's Dark Fortune of Intelligence",
+        desc = "DMF",
+        type = "world"
+    },
+    ["23738"] = {
+        name = "Sayge's Dark Fortune of Spirit",
+        desc = "DMF",
+        type = "world"
+    },
+    ["23768"] = {
+        name = "Sayge's Dark Fortune of Damage",
+        desc = "DMF",
+        type = "world"
+    },
+    ["24425"] => {
+        name = "Spirit of Zandalar",
+        desc = "ZG",
+        type = "world"
+    },
     ["22817"] = {
         name = "Fengus' Ferocity",
         desc = "DMT AP",
