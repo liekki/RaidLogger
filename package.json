@@ -10,6 +10,7 @@
     "commander": "^4.0.1",
     "inquirer": "^6.2.2",
     "inquirer-async": "^1.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "line-reader": "^0.4.0",
     "moment": "^2.24.0"
   },
