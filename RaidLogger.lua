@@ -1035,6 +1035,7 @@ end
 
 function RaidLoggerFrame:OnAddonLoaded()
     SLASH_RaidLogger1 = "/rl"
+    SLASH_RaidLogger2 = "/raidlogger"
     SlashCmdList["RaidLogger"] = RaidLogger_Commands
     out("Logs raid attendance into a file. Write |cFF00FF00/rl help|r for a list of commands.")
 
