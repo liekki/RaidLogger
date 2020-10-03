@@ -5,7 +5,7 @@
 -- Time: 18:36
 --
 
-local VERSION = 2.0011
+local VERSION = 2.0012
 local MIN_RAID_PLAYERS = 10
 local ADDON_NAME = "RaidLogger"
 local FONT_NAME = "Fonts\\FRIZQT__.TTF"
@@ -18,11 +18,11 @@ local TRACKED_INSTANCES = {
     [1] = "The Molten Core",
     [2] = "Blackwing Lair",
     [3] = "Onyxia's Lair",
-    [4] = "Zul'Gurub",
-    [5] = "Ahn'Qiraj",
-    [6] = "Ruins of Ahn'Qiraj",
-    [7] = "Naxxramas",
-    [8] = "Ragefire Chasm",
+    [4] = "Ahn'Qiraj",
+    [5] = "Naxxramas",
+--    [5] = "Zul'Gurub",
+--    [6] = "Ruins of Ahn'Qiraj",
+--    [8] = "Ragefire Chasm",
 }
 
 local CLASS_COLOR = {
@@ -40,6 +40,7 @@ local CLASS_COLOR = {
 
 local IGNORED_ITEMS = {
     [1] = "Elementium Ore",
+    [2] = "Nexus Crystal"
 }
 
 local COLOR_INSTANCE = "|cffff33ff"
@@ -305,7 +306,7 @@ local function LogLoot(who, loot, quantity, ts, tradedTo, votes, status, lootid)
         RaidLoggerStore.activeRaid.sands[who] = (RaidLoggerStore.activeRaid.sands[who] or 0) + 1
     end 
 
-    if who and quality >= QUALITY_UNCOMMON then
+    if who and quality >= QUALITY_EPIC then
         out("Logged loot: " .. ColorName(who) .. " received " .. itemLink)
         local entry = {
             player = who,
