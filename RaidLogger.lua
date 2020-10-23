@@ -305,8 +305,9 @@ local function LogLoot(who, loot, quantity, ts, tradedTo, votes, status, lootid)
         if not RaidLoggerStore.activeRaid.sands then RaidLoggerStore.activeRaid.sands = {} end 
         RaidLoggerStore.activeRaid.sands[who] = (RaidLoggerStore.activeRaid.sands[who] or 0) + 1
     end 
-
-    if who and quality >= QUALITY_EPIC then
+    
+    local ignoredItem = tableTextLookup(IGNORED_ITEMS, itemName)
+    if who and quality >= QUALITY_EPIC and not ignoredItem then
         out("Logged loot: " .. ColorName(who) .. " received " .. itemLink)
         local entry = {
             player = who,
